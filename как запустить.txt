@@ -1,0 +1,6 @@
+
+cd %USERPROFILE%\Desktop\book_project
+
+venv\Scripts\activate
+
+streamlit run app.py
