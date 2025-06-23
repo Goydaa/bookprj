@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 
-# --- ВРЕМЕННО: переименовываем русские названия столбцов, если такие есть ---
+#  переименовываем русские названия столбцов, если такие есть 
 if os.path.exists("books.csv"):
     try:
         temp_df = pd.read_csv("books.csv", encoding="utf-8")
@@ -16,7 +16,7 @@ if os.path.exists("books.csv"):
     except Exception as e:
         st.warning(f"Ошибка при попытке конвертировать заголовки: {e}")
 
-# --- Загрузка книг ---
+#  Загрузка книг 
 @st.cache_data
 def load_books():
     try:
@@ -33,13 +33,13 @@ def load_books():
 
 books_df = load_books()
 
-# --- Инициализация сессии ---
+#  Инициализация сессии 
 if "likes" not in st.session_state:
     st.session_state.likes = {}  
 if "read_later" not in st.session_state:
     st.session_state.read_later = set()
 
-# --- Фильтрация ---
+# Фильтрация 
 st.sidebar.title("🔍 Фильтрация")
 view_option = st.sidebar.radio(
     "Выбери режим просмотра:",
@@ -59,10 +59,10 @@ elif view_option == "👎 Не понравившиеся":
 elif view_option == "📜 Читать позже":
     display_df = books_df.loc[books_df.index.isin(st.session_state.read_later)]
 
-# --- Заголовок ---
+#  Заголовок 
 st.title(" Каталог книг")
 
-# --- Отображение книг ---
+# Отображение книг
 if display_df.empty:
     st.info("Нет книг для отображения в этом разделе.")
 else:
@@ -88,7 +88,7 @@ else:
 
 st.divider()
 
-# --- Рекомендации ---
+#  Рекомендации 
 liked_books = [row for i, row in books_df.iterrows() if st.session_state.likes.get(i) == "like"]
 if liked_books:
     st.header("Рекомендации по твоим вкусам")
